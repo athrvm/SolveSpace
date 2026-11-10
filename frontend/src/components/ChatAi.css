@@ -1,0 +1,44 @@
+.assistant-chat { display: flex; flex-direction: column; height: 68dvh; min-height: 400px; max-height: 850px; min-width: 0; border: 1px solid var(--line); border-radius: 16px; background: var(--color-base-100); overflow: hidden; container-type: inline-size; }
+.assistant-header { display: flex; flex-shrink: 0; align-items: center; gap: 12px; padding: 18px; border-bottom: 1px solid var(--line); }
+.assistant-avatar { display: grid; place-items: center; flex-shrink: 0; width: 40px; height: 40px; border-radius: 12px; background: color-mix(in srgb, var(--color-primary) 12%, var(--color-base-100)); color: var(--color-primary); }
+.assistant-heading { flex: 1; min-width: 0; }
+.assistant-heading h2 { margin: 0; font-size: 14px; font-weight: 650; }
+.assistant-heading p { margin: 4px 0 0; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.assistant-status { flex-shrink: 0; font-size: 11px; color: var(--color-primary); }
+.assistant-conversation { flex: 1; min-height: 0; padding: 22px 18px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.assistant-message { display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 22px; min-width: 0; }
+.assistant-message-label { display: flex; align-items: center; gap: 6px; margin: 0 4px 7px; font-size: 11px; font-weight: 600; color: var(--muted); }
+.assistant-message-label svg { color: var(--color-primary); }
+.assistant-bubble { max-width: 100%; min-width: 0; padding: 13px 16px; border: 1px solid var(--line); border-radius: 4px 14px 14px 14px; background: var(--color-base-200); font-size: 13px; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
+.assistant-message-user { align-items: flex-end; }
+.assistant-message-user .assistant-bubble { max-width: 90%; border-radius: 14px 4px 14px 14px; background: color-mix(in srgb, var(--color-primary) 10%, var(--color-base-100)); border-color: color-mix(in srgb, var(--color-primary) 25%, var(--line)); }
+.assistant-thinking { display: flex; align-items: center; gap: 12px; min-height: 30px; color: var(--muted); white-space: normal; }
+.assistant-orbit { display: inline-block; position: relative; flex-shrink: 0; width: 24px; height: 24px; animation: assistant-orbit-spin 1.25s linear infinite; }
+.assistant-orbit > span { position: absolute; left: 10px; top: 10px; width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: calc(.25 + var(--dot-index) * .1); transform: rotate(calc(var(--dot-index) * 45deg)) translateY(-9px); }
+.assistant-cursor { display: inline-block; width: 3px; height: 14px; margin-left: 4px; background: var(--color-primary); vertical-align: middle; }
+.assistant-error { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); white-space: normal; }
+.assistant-error[role="alert"] { color: var(--color-error); }
+.assistant-suggestions { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.assistant-suggestions button { display: flex; align-items: center; gap: 16px; padding: 9px 12px; min-height: 38px; border: 1px solid var(--line); border-radius: 9px; text-align: left; font-size: 12px; color: var(--muted); cursor: pointer; }
+.assistant-suggestions button:hover { color: var(--color-primary); border-color: var(--color-primary); background: var(--color-base-200); }
+.assistant-suggestions svg { flex-shrink: 0; margin-left: auto; }
+.assistant-composer { flex-shrink: 0; margin-top: auto; padding: 14px; border-top: 1px solid var(--line); background: var(--color-base-100); }
+.assistant-input-row { display: flex; align-items: flex-end; gap: 10px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--color-base-200); }
+.assistant-input-row:focus-within { border-color: var(--color-primary); box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 12%, transparent); }
+.assistant-input-row textarea { flex: 1; min-width: 0; width: 100%; resize: vertical; min-height: 60px; max-height: 160px; padding: 0; border: none; outline: none; background: transparent; color: var(--color-base-content); font: inherit; font-size: 13px; line-height: 1.6; }
+.assistant-input-row textarea::placeholder { color: var(--muted); }
+.assistant-send { display: grid; place-items: center; flex-shrink: 0; width: 40px; height: 40px; border: none; border-radius: 10px; background: var(--color-primary); color: var(--color-primary-content); cursor: pointer; }
+.assistant-send:hover { filter: brightness(.93); }
+.assistant-send:disabled { opacity: .35; cursor: not-allowed; }
+.assistant-stop { background: color-mix(in srgb, var(--color-primary) 14%, var(--color-base-100)); color: var(--color-primary); }
+.assistant-input-help { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px 12px; padding: 9px 2px 0; font-size: 10px; line-height: 1.5; color: var(--muted); }
+@keyframes assistant-orbit-spin { to { transform: rotate(360deg); } }
+@container (max-width: 360px) { .assistant-header { flex-wrap: wrap; gap: 8px; padding: 14px; } .assistant-status { padding-left: 48px; width: 100%; } .assistant-conversation { padding: 16px 12px; } .assistant-composer { padding: 10px; } .assistant-bubble { padding: 10px 12px; } }
+@media (prefers-reduced-motion: reduce) { .assistant-orbit { animation: none; } }
+
+/* Fill the available panel; only the conversation scrolls above the composer. */
+.statement-content.assistant-content { display: flex; padding: 0; overflow: hidden; }
+.assistant-content > .assistant-chat { flex: 1; height: auto; min-height: 0; max-height: none; border: 0; border-radius: 0; }
+@media (max-width: 700px) {
+  .statement-content.assistant-content { flex: none; height: 70dvh; min-height: 320px; max-height: none; }
+}
