@@ -1,5 +1,6 @@
 const Problem = require("../models/problem");
 const Submission = require("../models/submission");
+const User = require("../models/user");
 const { getLanguageById, submitBatch, submitToken } = require("../utils/problemUtility");
 
 const submitCode = async (req, res) => {
@@ -76,6 +77,14 @@ const submitCode = async (req, res) => {
     }
 
 
+    const accepted = problem.hiddenTestCases.length > 0 &&
+      testResult.length === problem.hiddenTestCases.length &&
+      testCasesPassed === problem.hiddenTestCases.length;
+    if (!accepted && status === 'accepted') {
+      status = 'error';
+      errorMessage = 'Incomplete test case evaluation';
+    }
+
     // Store the result in Database in Submission
     submittedResult.status = status;
     submittedResult.testCasesPassed = testCasesPassed;
@@ -85,17 +94,12 @@ const submitCode = async (req, res) => {
 
     await submittedResult.save();
 
-    // ProblemId ko insert karenge userSchema ke problemSolved mein if it is not persent there.
-    // ProblemId will be inserted in userSchema's problemSolved if it is not present there.
-
-    // req.result == user Information
-    if (!req.result.problemSolved.includes(problemId)) {
-      req.result.problemSolved.push(problemId);
-      await req.result.save();
+    // Only accepted submissions count; atomic insertion prevents duplicate solves.
+    if (accepted) {
+      await User.updateOne({ _id: userId }, { $addToSet: { problemSolved: problemId } });
     }
 
 
-    const accepted = (status == 'accepted')
     res.status(201).json({
       accepted,
       totalTestCases: submittedResult.testCasesTotal,
