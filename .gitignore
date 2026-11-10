@@ -1,0 +1,98 @@
+# Environment files (keep sanitised templates)
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+.envrc
+*.local
+
+# Judge0 configuration contains database and Redis passwords
+judge0.conf
+judge0.conf.*
+!judge0.conf.example
+
+# Credentials, private keys and local authentication state
+.npmrc
+.netrc
+.aws/
+.ssh/
+.gnupg/
+secrets/
+credentials/
+*.key
+*.pem
+*.p12
+*.pfx
+*.keystore
+id_rsa*
+id_ed25519*
+cookies.txt
+cookies.json
+cookie-jar.txt
+service-account*.json
+serviceAccount*.json
+*-credentials.json
+
+# Dependencies and package-manager caches (keep lockfiles)
+node_modules/
+.npm/
+.pnpm-store/
+
+# Generated frontend assets and caches
+dist/
+dist-ssr/
+build/
+.vite/
+.cache/
+.eslintcache
+*.tsbuildinfo
+
+# Logs, process state and test output
+logs/
+*.log
+*.pid
+*.pid.lock
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Local databases, exports, uploads and backups
+data/
+dump/
+dumps/
+backups/
+uploads/
+*.sql
+*.sql.gz
+*.sqlite
+*.sqlite3
+*.db
+*.bson
+*.rdb
+*.aof
+*.bak
+*.backup
+
+# Private scratch files and local tooling
+backend/rough.txt
+private/
+scratch/
+tmp/
+temp/
+.codex/
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.example.json
+
+# Operating-system and editor files
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+*~
+*.swp
+*.swo
+*.orig
